@@ -172,7 +172,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const CreateWorkshopPage()),
+                        builder: (context) => const HomePage()),
                   );
                 },
               ),

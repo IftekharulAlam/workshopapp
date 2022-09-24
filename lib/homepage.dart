@@ -5,6 +5,9 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 
 import 'package:http/http.dart' as http;
+import 'package:workshopapp/createWorkshopScreen.dart';
+import 'package:workshopapp/showWorkshopDetails.dart';
+import 'package:workshopapp/updateWorkshopPage.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -14,8 +17,8 @@ class HomePage extends StatefulWidget {
 }
 
 Future getall() async {
-  http.Response response = await http
-      .get(Uri.parse("http://192.168.0.100:8000/getTemparatureDataApp"));
+  http.Response response =
+      await http.get(Uri.parse("http://192.168.0.100:8000/getworkshopList"));
 
   if (response.statusCode == 200) {
     print(jsonDecode(response.body));
@@ -29,6 +32,9 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text("Workshop List"),
+      ),
       body: FutureBuilder(
         future: getall(),
         builder: (BuildContext context, AsyncSnapshot sn) {
@@ -38,24 +44,63 @@ class _HomePageState extends State<HomePage> {
               itemCount: unis.length,
               itemBuilder: (context, index) => GestureDetector(
                 onTap: () {
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(
-                  //     builder: (context) => showProfilePage(
-                  //       name: "${unis[index]["name"]}",
-                  //       address: "${unis[index]["address"]}",
-                  //       phone: "${unis[index]["phone"]}",
-                  //       workingHour: "${unis[index]["workingHour"]}",
-                  //       bytes: base64.decode(unis[index]["profilePic"]),
-                  //     ),
-                  //   ),
-                  // );
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => showWorkshopDetails(
+                        Name: "${unis[index]["Name"]}",
+                        Description: "${unis[index]["Description"]}",
+                        Time: "${unis[index]["Time"]}",
+                        Place: "${unis[index]["Place"]}",
+                        InstructorName: "${unis[index]["InstructorName"]}",
+                        InstructorPhone: "${unis[index]["InstructorPhone"]}",
+                        status: "${unis[index]["status"]}",
+                      ),
+                    ),
+                  );
                 },
                 child: Card(
                   child: ListTile(
                     // leading:Image.memory(base64.decode(unis[index]["profilePic"])),
-                    title: Text("${unis[index]["name"]}"),
-                    subtitle: Text("${unis[index]["phone"]}"),
+                    title: Text("${unis[index]["Name"]}"),
+                    subtitle: Text("${unis[index]["Time"]}"),
+                    trailing: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.all(4.0),
+                          child: IconButton(
+                            icon: Icon(Icons.edit_note_rounded),
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => updateWorkshopPage(
+                                    WorkshopID: "${unis[index]["ID"]}",
+                                    WorkshopName: "${unis[index]["Name"]}",
+                                    WorkshopDescription:
+                                        "${unis[index]["Description"]}",
+                                    WorkshopTime: "${unis[index]["Time"]}",
+                                    WorkshopPlace: "${unis[index]["Place"]}",
+                                    InstructorName:
+                                        "${unis[index]["InstructorName"]}",
+                                    InstructorPhone:
+                                        "${unis[index]["InstructorPhone"]}",
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.all(4.0),
+                          child: IconButton(
+                            icon: Icon(Icons.delete),
+                            onPressed: null,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
