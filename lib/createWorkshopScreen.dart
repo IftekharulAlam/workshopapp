@@ -20,7 +20,7 @@ class _CreateWorkshopPageState extends State<CreateWorkshopPage> {
       String InstructorName,
       String InstructorPhone) async {
     http.Response response = await http
-        .post(Uri.parse("http://192.168.0.100:8000/createWorkshop"), body: {
+        .post(Uri.parse("http://192.168.31.124:8000/createWorkshop"), body: {
       "WorkshopName": WorkshopName,
       "WorkshopDescription": WorkshopDescription,
       "WorkshopTime": WorkshopTime,

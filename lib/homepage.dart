@@ -18,10 +18,29 @@ class HomePage extends StatefulWidget {
 
 Future getall() async {
   http.Response response =
-      await http.get(Uri.parse("http://192.168.0.100:8000/getworkshopList"));
+      await http.get(Uri.parse("http://192.168.31.124:8000/getworkshopList"));
 
   if (response.statusCode == 200) {
     print(jsonDecode(response.body));
+    return jsonDecode(response.body);
+  } else {
+    throw Exception("Error loading data");
+  }
+}
+
+Future removeWorkshop(
+    String WorkshopID,
+    String WorkshopName,
+    String WorkshopDescription,
+    String WorkshopTime,
+    String WorkshopPlace,
+    String InstructorName,
+    String InstructorPhone) async {
+  http.Response response = await http
+      .post(Uri.parse("http://192.168.31.124:8000/removeWorkshop"), body: {
+    "WorkshopID": WorkshopID,
+  });
+  if (response.statusCode == 200) {
     return jsonDecode(response.body);
   } else {
     throw Exception("Error loading data");

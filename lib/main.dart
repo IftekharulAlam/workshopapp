@@ -202,16 +202,16 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                 const Text('Are you looking for work?'),
                 TextButton(
                   child: const Text(
-                    'Register',
+                    'Create ',
                     style: TextStyle(fontSize: 20),
                   ),
                   onPressed: () {
                     //signup screen
-                    // Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(
-                    //       builder: (context) => const RegistrationPageWorker()),
-                    // );
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const CreateWorkshopPage()),
+                    );
                   },
                 )
               ],
