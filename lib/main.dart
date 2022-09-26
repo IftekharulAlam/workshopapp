@@ -8,7 +8,6 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:workshopapp/createWorkshopScreen.dart';
 import 'package:workshopapp/homepage.dart';
-import 'package:workshopapp/registrationWorkshop.dart';
 
 void main() => runApp(const MyApp());
 

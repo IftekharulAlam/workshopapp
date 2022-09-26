@@ -3,6 +3,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 import 'package:http/http.dart' as http;
 import 'package:workshopapp/createWorkshopScreen.dart';
@@ -18,7 +19,7 @@ class HomePage extends StatefulWidget {
 
 Future getall() async {
   http.Response response =
-      await http.get(Uri.parse("http://192.168.31.124:8000/getworkshopList"));
+      await http.get(Uri.parse("http://192.168.0.100:8000/getworkshopList"));
 
   if (response.statusCode == 200) {
     print(jsonDecode(response.body));
@@ -28,19 +29,20 @@ Future getall() async {
   }
 }
 
-Future removeWorkshop(
-    String WorkshopID,
-    String WorkshopName,
-    String WorkshopDescription,
-    String WorkshopTime,
-    String WorkshopPlace,
-    String InstructorName,
-    String InstructorPhone) async {
+Future removeWorkshop(String WorkshopID) async {
   http.Response response = await http
-      .post(Uri.parse("http://192.168.31.124:8000/removeWorkshop"), body: {
+      .post(Uri.parse("http://192.168.0.100:8000/removeWorkshop"), body: {
     "WorkshopID": WorkshopID,
   });
   if (response.statusCode == 200) {
+    Fluttertoast.showToast(
+        msg: "Updated Successful",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0);
     return jsonDecode(response.body);
   } else {
     throw Exception("Error loading data");
@@ -115,7 +117,9 @@ class _HomePageState extends State<HomePage> {
                           padding: EdgeInsets.all(4.0),
                           child: IconButton(
                             icon: Icon(Icons.delete),
-                            onPressed: null,
+                            onPressed: () {
+                              removeWorkshop(unis[index]["ID"].toString());
+                            },
                           ),
                         ),
                       ],
