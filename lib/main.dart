@@ -8,6 +8,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:workshopapp/createWorkshopScreen.dart';
 import 'package:workshopapp/homepage.dart';
+import 'package:workshopapp/registerUser.dart';
 
 void main() => runApp(const MyApp());
 
@@ -37,16 +38,16 @@ class MyStatefulWidget extends StatefulWidget {
 }
 
 class _MyStatefulWidgetState extends State<MyStatefulWidget> {
-  String dropdownvalue = 'User';
-  var items = ['User', 'Worker'];
-  TextEditingController name = TextEditingController();
+  String dropdownvalue = 'Student';
+  var items = ['Student', 'Instructor', 'Admin'];
+  TextEditingController ID = TextEditingController();
   TextEditingController password = TextEditingController();
 
   Future login() async {
     String finalUrl = "http://192.168.0.100:8000/login";
     var url = Uri.parse(finalUrl);
     var response = await http.post(url, body: {
-      "name": name.text,
+      "ID": ID.text,
       "password": password.text,
       "userType": dropdownvalue
     });
@@ -109,10 +110,10 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
             Container(
               padding: const EdgeInsets.all(10),
               child: TextField(
-                controller: name,
+                controller: ID,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: 'User Name',
+                  labelText: 'ID',
                 ),
               ),
             ),
@@ -167,12 +168,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
               child: ElevatedButton(
                 child: const Text('Login'),
                 onPressed: () {
-                  // login();
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const HomePage()),
-                  );
+                  login();
                 },
               ),
             ),
@@ -186,11 +182,11 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                   ),
                   onPressed: () {
                     //signup screen
-                    // Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(
-                    //       builder: (context) => const RegistrationPageUser()),
-                    // );
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const RegistrationPageUser()),
+                    );
                   },
                 )
               ],
