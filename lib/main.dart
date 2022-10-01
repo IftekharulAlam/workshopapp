@@ -65,9 +65,9 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
       Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => const HomePage(
-                // name: name.text,
-                // type: dropdownvalue,
+            builder: (context) => HomePage(
+                  id: ID.text,
+                  type: dropdownvalue,
                 )),
       );
     } else {
@@ -192,26 +192,26 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
               ],
               mainAxisAlignment: MainAxisAlignment.center,
             ),
-            Row(
-              children: <Widget>[
-                const Text('Are you looking for work?'),
-                TextButton(
-                  child: const Text(
-                    'Create ',
-                    style: TextStyle(fontSize: 20),
-                  ),
-                  onPressed: () {
-                    //signup screen
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const CreateWorkshopPage()),
-                    );
-                  },
-                )
-              ],
-              mainAxisAlignment: MainAxisAlignment.center,
-            ),
+            // Row(
+            //   children: <Widget>[
+            //     const Text('Are you looking for work?'),
+            //     TextButton(
+            //       child: const Text(
+            //         'Create ',
+            //         style: TextStyle(fontSize: 20),
+            //       ),
+            //       onPressed: () {
+            //         //signup screen
+            //         Navigator.push(
+            //           context,
+            //           MaterialPageRoute(
+            //               builder: (context) => const CreateWorkshopPage()),
+            //         );
+            //       },
+            //     )
+            //   ],
+            //   mainAxisAlignment: MainAxisAlignment.center,
+            // ),
           ],
         ));
   }
