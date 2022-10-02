@@ -27,7 +27,7 @@ class _RegistrationPageUserState extends State<RegistrationPageUser> {
 
   Future registerUser() async {
     http.Response response = await http
-        .post(Uri.parse("http://192.168.0.100:8000/registerUser"), body: {
+        .post(Uri.parse("http://192.168.31.116:8000/registerUser"), body: {
       "Name": name.text,
       "ID": id.text,
       "Email": email.text,
