@@ -22,7 +22,7 @@ class HomePage extends StatefulWidget {
 
 Future getProfileInfo(String ID, String typeOf) async {
   http.Response response = await http.post(
-      Uri.parse("http://192.168.31.116:8000/getProfileInfo"),
+      Uri.parse("http://192.168.0.100:8000/getProfileInfo"),
       body: {"ID": ID, "type": typeOf});
 
   if (response.statusCode == 200) {
@@ -35,7 +35,7 @@ Future getProfileInfo(String ID, String typeOf) async {
 Future applyForWorkshop(
     String Workshop_ID, String Workshop_Name, String Student_ID) async {
   http.Response response = await http
-      .post(Uri.parse("http://192.168.31.116:8000/applyForWorkshop"), body: {
+      .post(Uri.parse("http://192.168.0.100:8000/applyForWorkshop"), body: {
     "Workshop_ID": Workshop_ID,
     "Workshop_Name": Workshop_Name,
     "Student_ID": Student_ID,
@@ -50,7 +50,7 @@ Future applyForWorkshop(
 
 Future getall() async {
   http.Response response =
-      await http.get(Uri.parse("http://192.168.31.116:8000/getworkshopList"));
+      await http.get(Uri.parse("http://192.168.0.100:8000/getworkshopList"));
 
   if (response.statusCode == 200) {
     print(jsonDecode(response.body));
@@ -62,7 +62,7 @@ Future getall() async {
 
 Future removeWorkshop(String WorkshopID) async {
   http.Response response = await http
-      .post(Uri.parse("http://192.168.31.116:8000/removeWorkshop"), body: {
+      .post(Uri.parse("http://192.168.0.100:8000/removeWorkshop"), body: {
     "WorkshopID": WorkshopID,
   });
   if (response.statusCode == 200) {
@@ -300,8 +300,7 @@ class _HomePageState extends State<HomePage> {
                                       child: ElevatedButton(
                                         child: const Text('Apply'),
                                         onPressed: () {
-                                          //login();
-                                          applyForWorkshop(unis[index]["ID"],
+                                          applyForWorkshop(unis[index]["ID"].toString(),
                                               unis[index]["Name"], widget.id);
                                         },
                                       ),
