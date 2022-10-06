@@ -32,6 +32,18 @@ Future getProfileInfo(String ID, String typeOf) async {
   }
 }
 
+Future getWorkshopListof(String ID, String typeOf) async {
+  http.Response response = await http.post(
+      Uri.parse("http://192.168.0.100:8000/getworkshopListmy"),
+      body: {"ID": ID, "type": typeOf});
+
+  if (response.statusCode == 200) {
+    return jsonDecode(response.body);
+  } else {
+    throw Exception("Error loading data");
+  }
+}
+
 Future applyForWorkshop(
     String Workshop_ID, String Workshop_Name, String Student_ID) async {
   http.Response response = await http
@@ -216,7 +228,7 @@ class _HomePageState extends State<HomePage> {
               : Container(),
           Expanded(
             child: FutureBuilder(
-              future: getall(),
+              future: getWorkshopListof(widget.id, widget.type),
               builder: (BuildContext context, AsyncSnapshot sn) {
                 if (sn.hasData) {
                   List unis = sn.data;
@@ -293,18 +305,47 @@ class _HomePageState extends State<HomePage> {
                                     )
                                   : Container(),
                               widget.type == "Student"
-                                  ? Container(
-                                      height: 50,
-                                      padding: const EdgeInsets.fromLTRB(
-                                          10, 0, 10, 0),
-                                      child: ElevatedButton(
-                                        child: const Text('Apply'),
-                                        onPressed: () {
-                                          applyForWorkshop(unis[index]["ID"].toString(),
-                                              unis[index]["Name"], widget.id);
-                                        },
-                                      ),
-                                    )
+                                  ? unis[index]["AppStatus"] == 'Yes'
+                                      ? Container(
+                                          height: 50,
+                                          padding: const EdgeInsets.fromLTRB(
+                                              10, 0, 10, 0),
+                                          child: ElevatedButton(
+                                            style: ElevatedButton.styleFrom(
+                                              primary: Colors.red,
+                                            ),
+                                            child: const Text('Applied'),
+                                            onPressed: () {
+                                              // applyForWorkshop(
+                                              //     unis[index]["ID"].toString(),
+                                              //     unis[index]["Name"],
+                                              //     widget.id);
+                                              Fluttertoast.showToast(
+                                                  msg: "Already Applied",
+                                                  toastLength:
+                                                      Toast.LENGTH_SHORT,
+                                                  gravity: ToastGravity.CENTER,
+                                                  timeInSecForIosWeb: 1,
+                                                  backgroundColor: Colors.red,
+                                                  textColor: Colors.white,
+                                                  fontSize: 16.0);
+                                            },
+                                          ),
+                                        )
+                                      : Container(
+                                          height: 50,
+                                          padding: const EdgeInsets.fromLTRB(
+                                              10, 0, 10, 0),
+                                          child: ElevatedButton(
+                                            child: const Text('Apply'),
+                                            onPressed: () {
+                                              applyForWorkshop(
+                                                  unis[index]["ID"].toString(),
+                                                  unis[index]["Name"],
+                                                  widget.id);
+                                            },
+                                          ),
+                                        )
                                   : Container(),
                             ],
                           ),
