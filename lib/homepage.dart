@@ -261,10 +261,12 @@ class _HomePageState extends State<HomePage> {
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               widget.type == "Admin"
-                                  ? Padding(
-                                      padding: EdgeInsets.all(4.0),
-                                      child: IconButton(
-                                        icon: Icon(Icons.edit_note_rounded),
+                                  ? Container(
+                                      height: 50,
+                                      padding: const EdgeInsets.fromLTRB(
+                                          5, 0, 5, 0),
+                                      child: ElevatedButton(
+                                        child: Icon(Icons.edit_note_rounded),
                                         onPressed: () {
                                           Navigator.push(
                                             context,
@@ -285,6 +287,9 @@ class _HomePageState extends State<HomePage> {
                                                     "${unis[index]["InstructorName"]}",
                                                 InstructorPhone:
                                                     "${unis[index]["InstructorPhone"]}",
+                                                Status:
+                                                    "${unis[index]["status"]}",
+
                                               ),
                                             ),
                                           );
@@ -293,10 +298,12 @@ class _HomePageState extends State<HomePage> {
                                     )
                                   : Container(),
                               widget.type == "Admin"
-                                  ? Padding(
-                                      padding: EdgeInsets.all(4.0),
-                                      child: IconButton(
-                                        icon: Icon(Icons.delete),
+                                  ? Container(
+                                      height: 50,
+                                      padding: const EdgeInsets.fromLTRB(
+                                          5, 0, 0, 0),
+                                      child: ElevatedButton(
+                                        child: Icon(Icons.delete),
                                         onPressed: () {
                                           removeWorkshop(
                                               unis[index]["ID"].toString());

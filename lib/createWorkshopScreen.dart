@@ -29,6 +29,14 @@ class _CreateWorkshopPageState extends State<CreateWorkshopPage> {
       "InstructorPhone": InstructorPhone
     });
     if (response.statusCode == 200) {
+      Fluttertoast.showToast(
+          msg: "Created Successful",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0);
       return jsonDecode(response.body);
     } else {
       throw Exception("Error loading data");
@@ -108,16 +116,7 @@ class _CreateWorkshopPageState extends State<CreateWorkshopPage> {
                 ),
               ),
             ),
-            // Container(
-            //   height: 50,
-            //   padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-            //   child: ElevatedButton(
-            //     child: const Text('Upload Picture'),
-            //     onPressed: () {
-            //       //_openImagePicker();
-            //     },
-            //   ),
-            // ),
+
             Container(
               padding: const EdgeInsets.all(10),
               child: TextField(

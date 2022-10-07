@@ -13,6 +13,7 @@ class updateWorkshopPage extends StatefulWidget {
   String WorkshopPlace;
   String InstructorName;
   String InstructorPhone;
+  String Status;
   updateWorkshopPage({
     super.key,
     required this.WorkshopID,
@@ -22,6 +23,7 @@ class updateWorkshopPage extends StatefulWidget {
     required this.WorkshopPlace,
     required this.InstructorName,
     required this.InstructorPhone,
+    required this.Status,
   });
 
   @override
@@ -29,6 +31,8 @@ class updateWorkshopPage extends StatefulWidget {
 }
 
 class _updateWorkshopPageState extends State<updateWorkshopPage> {
+  late String dropdownvalue;
+  var items = ['Enable', 'Disable'];
   Future updateWorkshop(
       String WorkshopID,
       String WorkshopName,
@@ -45,9 +49,18 @@ class _updateWorkshopPageState extends State<updateWorkshopPage> {
       "WorkshopTime": WorkshopTime,
       "WorkshopPlace": WorkshopPlace,
       "InstructorName": InstructorName,
-      "InstructorPhone": InstructorPhone
+      "InstructorPhone": InstructorPhone,
+      "status": dropdownvalue
     });
     if (response.statusCode == 200) {
+      Fluttertoast.showToast(
+          msg: "Updated Successful",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0);
       return jsonDecode(response.body);
     } else {
       throw Exception("Error loading data");
@@ -72,6 +85,7 @@ class _updateWorkshopPageState extends State<updateWorkshopPage> {
     WorkshopPlace.text = widget.WorkshopPlace;
     InstructorName.text = widget.InstructorName;
     InstructorPhone.text = widget.InstructorPhone;
+    dropdownvalue = widget.Status;
   }
 
   @override
@@ -150,16 +164,6 @@ class _updateWorkshopPageState extends State<updateWorkshopPage> {
                 ),
               ),
             ),
-            // Container(
-            //   height: 50,
-            //   padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-            //   child: ElevatedButton(
-            //     child: const Text('Upload Picture'),
-            //     onPressed: () {
-            //       //_openImagePicker();
-            //     },
-            //   ),
-            // ),
             Container(
               padding: const EdgeInsets.all(10),
               child: TextField(
@@ -180,20 +184,60 @@ class _updateWorkshopPageState extends State<updateWorkshopPage> {
                 ),
               ),
             ),
+            Center(
+              child: Container(
+                padding: const EdgeInsets.all(10),
+                child: DropdownButton(
+                  underline: Container(),
+                  style: const TextStyle(
+                      //te
+                      color: Colors.black, //Font color
+                      fontSize: 18 //font size on dropdown button
+                      ),
+                  value: dropdownvalue,
+                  icon: const Icon(Icons.keyboard_arrow_down),
+                  items: items.map((String items) {
+                    return DropdownMenuItem(value: items, child: Text(items));
+                  }).toList(),
+                  onChanged: (String? newValue) {
+                    setState(() {
+                      dropdownvalue = newValue!;
+                    });
+                  },
+                ),
+              ),
+            ),
             Container(
               height: 50,
               padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
               child: ElevatedButton(
                 child: const Text('Update Workshop'),
                 onPressed: () {
-                  updateWorkshop(
-                      WorkshopID.text,
-                      WorkshopName.text,
-                      WorkshopDescription.text,
-                      WorkshopTime.text,
-                      WorkshopPlace.text,
-                      InstructorName.text,
-                      InstructorPhone.text);
+                  if (WorkshopID.text != "" &&
+                      WorkshopName.text != "" &&
+                      WorkshopDescription.text != "" &&
+                      WorkshopTime.text != "" &&
+                      WorkshopPlace.text != "" &&
+                      InstructorName.text != "" &&
+                      InstructorPhone.text != "") {
+                    updateWorkshop(
+                        WorkshopID.text,
+                        WorkshopName.text,
+                        WorkshopDescription.text,
+                        WorkshopTime.text,
+                        WorkshopPlace.text,
+                        InstructorName.text,
+                        InstructorPhone.text);
+                  } else {
+                    Fluttertoast.showToast(
+                        msg: "Failed",
+                        toastLength: Toast.LENGTH_SHORT,
+                        gravity: ToastGravity.CENTER,
+                        timeInSecForIosWeb: 1,
+                        backgroundColor: Colors.red,
+                        textColor: Colors.white,
+                        fontSize: 16.0);
+                  }
                 },
               ),
             ),
