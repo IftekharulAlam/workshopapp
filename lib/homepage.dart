@@ -263,8 +263,8 @@ class _HomePageState extends State<HomePage> {
                               widget.type == "Admin"
                                   ? Container(
                                       height: 50,
-                                      padding: const EdgeInsets.fromLTRB(
-                                          5, 0, 5, 0),
+                                      padding:
+                                          const EdgeInsets.fromLTRB(5, 0, 5, 0),
                                       child: ElevatedButton(
                                         child: Icon(Icons.edit_note_rounded),
                                         onPressed: () {
@@ -289,7 +289,6 @@ class _HomePageState extends State<HomePage> {
                                                     "${unis[index]["InstructorPhone"]}",
                                                 Status:
                                                     "${unis[index]["status"]}",
-
                                               ),
                                             ),
                                           );
@@ -300,8 +299,8 @@ class _HomePageState extends State<HomePage> {
                               widget.type == "Admin"
                                   ? Container(
                                       height: 50,
-                                      padding: const EdgeInsets.fromLTRB(
-                                          5, 0, 0, 0),
+                                      padding:
+                                          const EdgeInsets.fromLTRB(5, 0, 0, 0),
                                       child: ElevatedButton(
                                         child: Icon(Icons.delete),
                                         onPressed: () {
@@ -323,10 +322,6 @@ class _HomePageState extends State<HomePage> {
                                             ),
                                             child: const Text('Applied'),
                                             onPressed: () {
-                                              // applyForWorkshop(
-                                              //     unis[index]["ID"].toString(),
-                                              //     unis[index]["Name"],
-                                              //     widget.id);
                                               Fluttertoast.showToast(
                                                   msg: "Already Applied",
                                                   toastLength:
@@ -346,10 +341,13 @@ class _HomePageState extends State<HomePage> {
                                           child: ElevatedButton(
                                             child: const Text('Apply'),
                                             onPressed: () {
-                                              applyForWorkshop(
-                                                  unis[index]["ID"].toString(),
-                                                  unis[index]["Name"],
-                                                  widget.id);
+                                              setState(() {
+                                                applyForWorkshop(
+                                                    unis[index]["ID"]
+                                                        .toString(),
+                                                    unis[index]["Name"],
+                                                    widget.id);
+                                              });
                                             },
                                           ),
                                         )
